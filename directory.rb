@@ -18,10 +18,12 @@ def print_header
    puts "-------------"
 end
 
-def print(students)
-   students.each do |student|
-   puts "#{student[:name]} (#{student[:cohort]} cohort)"
+def print(students, letter)
+   students.each_with_index do |student, index|
+       if student[:name].length < 12
+   puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0] == letter
 end
+   end
 end
 
 def print_footer(names)
@@ -30,7 +32,7 @@ end
 
 students = input_students
 print_header
-print(students)
+print(students, "D")
 print_footer(students)
 
 #students = [
