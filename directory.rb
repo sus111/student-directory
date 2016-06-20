@@ -13,7 +13,7 @@ def input_students
 name = gets.chomp
 students = []
 while !name.empty? do
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november, hobbies: "fishing", country: "Romania", height: "7ft", fears: "Spiders", addictions: "Chocolate" }
     puts "Now we have #{students.count} students"
     name = gets.chomp
 end
@@ -21,20 +21,20 @@ students
 end
 
 def print_header
-   puts "The students of my cohort at Makers Academy"
-   puts "-------------"
+   puts "The students of my cohort at Makers Academy".center(30)
+   puts "-------------".center(30)
 end
 
 def print(students)
 index = 0
 while index < students.length
-   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort)" 
+   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobbies]}, from #{students[index][:country]}, #{students[index][:height]} tall, scared of #{students[index][:fears]} and can't live without #{students[index][:addictions]}.".center(30) 
    index += 1
 end
    end
 
 def print_footer(names)
-    puts "Overall, we have #{names.count} great students."
+    puts "Overall, we have #{names.count} great students.".center(30)
 end
 
 students = input_students
