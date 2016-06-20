@@ -3,18 +3,21 @@ def input_students
     puts "To finish, just hit return twice."
 
 students = []
-puts "Please enter the names of the students"
-name = gets.chomp
-puts "Please enter the student's cohort"
-cohort = gets.chomp
 
-while !name.empty? || !cohort.empty? 
-    students << {name: name, cohort: cohort, hobbies: "fishing", country: "Romania", height: "7ft", fears: "Spiders", addictions: "Chocolate" }
+
+attributes = ["name", "cohort", "hobby", "country", "height", "fear", "addiction"]
+index = 0
+while index < attributes.length
+    current = attributes[index]
+question = "Please enter the student's #{current}"
+current = gets.chomp
+break if current.empty?
+students << students[index][current]
+index += 1
+
+    #students << {name: name, cohort: cohort, hobby: hobby, country: country, height: height, fear: fear, addiction: addiction }
+
     puts "Now we have #{students.count} students"
-puts "Please enter the names of the students"
-name = gets.chomp
-puts "Please enter the student's cohort"
-cohort = gets.chomp
 end
 students
 end
@@ -27,7 +30,7 @@ end
 def print(students)
 index = 0
 while index < students.length
-   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobbies]}, from #{students[index][:country]}, #{students[index][:height]} tall, scared of #{students[index][:fears]} and can't live without #{students[index][:addictions]}.".center(30) 
+   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]}, from #{students[index][:country]}, #{students[index][:height]} tall, scared of #{students[index][:fear]} and can't live without #{students[index][:addiction]}.".center(30) 
    index += 1
 end
    end
