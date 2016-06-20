@@ -1,21 +1,20 @@
 def input_students
-    puts "Please enter the names of the students"
+    puts "Please enter student details"
     puts "To finish, just hit return twice."
 
-#def print(students, letter)
-#   students.each_with_index do |student, index|
-#       if student[:name].length < 12
-#   puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0] == letter
-#end
-#   end
-#end
-#
-name = gets.chomp
 students = []
-while !name.empty? do
-    students << {name: name, cohort: :november, hobbies: "fishing", country: "Romania", height: "7ft", fears: "Spiders", addictions: "Chocolate" }
+puts "Please enter the names of the students"
+name = gets.chomp
+puts "Please enter the student's cohort"
+cohort = gets.chomp
+
+while !name.empty? || !cohort.empty? 
+    students << {name: name, cohort: cohort, hobbies: "fishing", country: "Romania", height: "7ft", fears: "Spiders", addictions: "Chocolate" }
     puts "Now we have #{students.count} students"
-    name = gets.chomp
+puts "Please enter the names of the students"
+name = gets.chomp
+puts "Please enter the student's cohort"
+cohort = gets.chomp
 end
 students
 end
