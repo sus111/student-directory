@@ -13,31 +13,23 @@ continue = true
     else
       puts "Please enter student's cohort:"
       cohort = gets.chomp
-      if cohort.empty? 
-         cohort = "unknown"  
-      end
+      cohort = "unknown"  if cohort.empty?
       puts "Please enter student's hobby:"
       hobby = gets.chomp
-      if hobby.empty? 
-          hobby = "unknown"
-      end
+      hobby = "unknown" if hobby.empty?
       puts "Please enter student's eye colour"
       eye_colour = gets.chomp
-      if eye_colour.empty?
-         eye_colour = "unknown:"
-      end
-    end
+      eye_colour = "unknown" if eye_colour.empty?
+
       student = {
         name: name,
         cohort: cohort,
         hobby: hobby,
         eyes: eye_colour
        }
-      if name
       students << student
       end
     end
-
 students 
 end
 
@@ -55,18 +47,30 @@ end
 end
 
 def print(students)
-students.map do |key, value|
-   puts key if key == :cohort
+index = 0
+while index < students.length
+   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]} with #{students[index][:eyes]} eyes.".center(30) 
+   index += 1
 end
+   end
+#
 
+#students.map do |key, value|
+#   puts key if key == :cohort
+#end
+
+#def print(students)
+#
 #index = 0
 #while index < students.length
 #puts "Students from the #{students[index][:cohort]} cohort:"
 #puts current_cohort = students[index][:cohort]
-##students[:cohort].each do |key, cohort| 
+#students[:cohort].each do |key, cohort| 
 #  puts "#{students[index]}"   if cohort == current_cohort
 #  index += 1
-end
+#end
+#end
+#end
 
 def print_footer(students)
    (puts "Sadly, we don't currently have any students at the Academy.") if students.length == 0
@@ -80,12 +84,3 @@ print(students)
 print_footer(students)
 
 
-#
-#def print(students)
-#index = 0
-#while index < students.length
-#   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]} with #{students[index][:eyes]} eyes.".center(30) 
-#   index += 1
-#end
-#   end
-#
