@@ -6,17 +6,17 @@ def create_students
 students = []
 continue = true
   while continue
-    puts "Please enter student's name"
+    puts "Please enter student's name:"
     name = gets.chomp
     if name.empty?
         continue = false
     else
-      puts "Please enter student's cohort"
+      puts "Please enter student's cohort:"
       cohort = gets.chomp
       if cohort.empty? 
          cohort = "unknown"  
       end
-      puts "Please enter student's hobby"
+      puts "Please enter student's hobby:"
       hobby = gets.chomp
       if hobby.empty? 
           hobby = "unknown"
@@ -24,7 +24,7 @@ continue = true
       puts "Please enter student's eye colour"
       eye_colour = gets.chomp
       if eye_colour.empty?
-         eye_colour = "unknown"
+         eye_colour = "unknown:"
       end
     end
       student = {
@@ -55,12 +55,18 @@ end
 end
 
 def print(students)
-index = 0
-while index < students.length
-   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]} with #{students[index][:eyes]} eyes.".center(30) 
-   index += 1
+students.map do |key, value|
+   puts key if key == :cohort
 end
-   end
+
+#index = 0
+#while index < students.length
+#puts "Students from the #{students[index][:cohort]} cohort:"
+#puts current_cohort = students[index][:cohort]
+##students[:cohort].each do |key, cohort| 
+#  puts "#{students[index]}"   if cohort == current_cohort
+#  index += 1
+end
 
 def print_footer(students)
    (puts "Sadly, we don't currently have any students at the Academy.") if students.length == 0
@@ -72,3 +78,14 @@ students = create_students
 print_header(students)
 print(students)
 print_footer(students)
+
+
+#
+#def print(students)
+#index = 0
+#while index < students.length
+#   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]} with #{students[index][:eyes]} eyes.".center(30) 
+#   index += 1
+#end
+#   end
+#
