@@ -1,3 +1,27 @@
+def select_cohort
+month_not_found = true
+while month_not_found
+      puts "Please enter student's cohort:"
+      cohort = gets.chomp.downcase
+      months = [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" ]
+      if months.include?(cohort)
+          month_not_found = false
+          cohort.capitalize!
+      else
+        predicted_month = months.select { |month| month if month[0..2] == cohort[0..2] }[0].capitalize
+      puts "Did you mean #{predicted_month}? Y/N"
+      answer = gets.chomp
+        if answer == "Y"
+            cohort = predicted_month
+            month_not_found = false
+        elsif answer == "N"
+            puts "Please enter the month correctly."
+        end
+      end
+end
+cohort
+end
+
 def create_students
 
    puts "Please enter student details"
@@ -11,15 +35,16 @@ continue = true
     if name.empty?
         continue = false
     else
-      puts "Please enter student's cohort:"
-      cohort = gets.chomp
-      cohort = "unknown"  if cohort.empty?
+
+      cohort = select_cohort
+
+
       puts "Please enter student's hobby:"
       hobby = gets.chomp
-      hobby = "unknown" if hobby.empty?
+      hobby = "unknown hobbies" if hobby.empty?
       puts "Please enter student's eye colour"
       eye_colour = gets.chomp
-      eye_colour = "unknown" if eye_colour.empty?
+      eye_colour = "unknown-coloured" if eye_colour.empty?
 
       student = {
         name: name,
@@ -30,6 +55,7 @@ continue = true
       students << student
       end
     end
+#  print students
 students 
 end
 
@@ -46,21 +72,20 @@ def print_header(students)
 end
 end
 
-def print(students)
+def print_students(students)
 index = 0
-while index < students.length
+  while index < students.length
    puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]} with #{students[index][:eyes]} eyes.".center(30) 
    index += 1
+  end
 end
-   end
-#
 
+
+#def print_students(students)
 #students.map do |key, value|
 #   puts key if key == :cohort
 #end
 
-#def print(students)
-#
 #index = 0
 #while index < students.length
 #puts "Students from the #{students[index][:cohort]} cohort:"
@@ -68,8 +93,6 @@ end
 #students[:cohort].each do |key, cohort| 
 #  puts "#{students[index]}"   if cohort == current_cohort
 #  index += 1
-#end
-#end
 #end
 
 def print_footer(students)
@@ -80,7 +103,5 @@ end
 
 students = create_students
 print_header(students)
-print(students)
+print_students(students)
 print_footer(students)
-
-
