@@ -1,43 +1,38 @@
-
 def create_students
-    puts "Please enter student details"
-    puts "To finish, just hit return twice."
 
- puts "Please enter name"
- name = gets.chomp
-  puts "Please enter cohort"
-  cohort = gets.chomp
+   puts "Please enter student details"
+   puts "To finish, just hit return twice."
 
 students = []
-
-while !name.empty? || !cohort.empty? do
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
-    puts "Please enter name"
+continue = true
+  while continue
+    puts "Please enter student's name"
     name = gets.chomp
-    puts "Please enter cohort"
-    cohort = gets.chomp
-end
+    if name.empty?
+        continue = false
+    else
+      puts "Please enter student's cohort"
+      cohort = gets.chomp
+      puts "Please enter student's hobby"
+      hobby = gets.chomp
+      puts "Please enter student's eye colour"
+      eye_colour = gets.chomp
+      student = {
+        name: name,
+        cohort: cohort,
+        hobby: hobby,
+        eyes: eye_colour
+       }
+      students << student
+    end
+  end
 students
 end
 
-
-#
-#while !name.empty? || !cohort.empty?
-#  students << { name: name, cohort: cohort}
-#  puts "Please enter name"
-#  name = gets.chomp
-#  puts "Please enter cohort"
-#  cohort = gets.chomp
-#return students
-#  end
-#students
-#end
-#students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
-#
-    
+   
 
 def print_header(students)
+   students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
    puts "The students of my cohort at Makers Academy".center(30)
    puts "-------------".center(30)
 end
@@ -59,44 +54,3 @@ students = create_students
 print_header(students)
 print(students)
 print_footer(students)
-
-#students = [
-# {name: "Dr. Hannibal Lecter", cohort: :november},
-# {name: "Darth Vader", cohort: :november},
-# {name: "Nurse Ratched", cohort: :november},
-# {name: "Michael Corleone", cohort: :november},
-# {name: "Alex DeLarge", cohort: :november},
-# {name: "The Wicked Witch of the West", cohort: :november},
-# {name: "Terminator", cohort: :november},
-# {name: "Freddy Krueger", cohort: :november},
-# {name: "The Joker", cohort: :november},
-# {name: "Joffrey Baratheon", cohort: :november},
-# {name: "Norman Bates", cohort: :november}
-#]
-#
-#puts "Please enter the student's name"
-#value = gets.chomp
-#
-#  students = []
-#  attributes = {}
-#while value.length > 0 
-#
-#attributes = { name: value, cohort: "", hobby: "", country: "", height: "", fear: "", addiction: "", }
-# attributes(name:).reject{|attribute, value| attribute == :name}.map do |attribute, value|
-#     
-#  puts "Please enter the student's #{attribute}:"
-#  value = gets.chomp
-#  attributes[attribute] = value
-#  
-#puts "Please enter the student's name"
-#value = gets.chomp
-#  end
-#  return attributes
-#students << attributes
-#end
-#students
-#end
-#
-#
-#students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
-#
