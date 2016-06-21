@@ -13,41 +13,59 @@ continue = true
     else
       puts "Please enter student's cohort"
       cohort = gets.chomp
+      if cohort.empty? 
+         cohort = "unknown"  
+      end
       puts "Please enter student's hobby"
       hobby = gets.chomp
+      if hobby.empty? 
+          hobby = "unknown"
+      end
       puts "Please enter student's eye colour"
       eye_colour = gets.chomp
+      if eye_colour.empty?
+         eye_colour = "unknown"
+      end
+    end
       student = {
         name: name,
         cohort: cohort,
         hobby: hobby,
         eyes: eye_colour
        }
+      if name
       students << student
+      end
     end
-  end
-students
+
+students 
 end
 
-   
-
 def print_header(students)
-   students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
-   puts "The students of my cohort at Makers Academy".center(30)
-   puts "-------------".center(30)
+   if students.length > 0  
+     if students.length == 1 
+        puts "Now we have #{students.length} student.".center(30)
+        puts "The only student at Makers Academy:".center(30)
+     else
+        puts "Now we have #{students.length} students!" 
+        puts "The students of my cohort at Makers Academy:".center(30)
+     end
+   puts "-------------------------------------------".center(30)
+end
 end
 
 def print(students)
 index = 0
 while index < students.length
-   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]}, from #{students[index][:country]}, #{students[index][:height]}m tall, scared of #{students[index][:fear]} and can't live without #{students[index][:addiction]}.".center(30) 
+   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]} with #{students[index][:eyes]} eyes.".center(30) 
    index += 1
 end
    end
 
 def print_footer(students)
-students.length == 1 ?  (puts "We only have #{students.count} lonely student at the whole academy.".center(30)) : (puts "Overall, we have #{students.count} great students.".center(30))
-
+   (puts "Sadly, we don't currently have any students at the Academy.") if students.length == 0
+   (puts "We only have #{students.count} lonely student at the whole academy.".center(30)) if students.length == 1
+   (puts "Overall, we have #{students.count} great students.".center(30)) if students.length > 1
 end
 
 students = create_students
