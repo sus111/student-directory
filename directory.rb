@@ -10,18 +10,31 @@ def create_students
 
 students = []
 
-while !name.empty? || !cohort.empty?
-  students << { name: name, cohort: cohort}
-  puts "Please enter name"
-  name = gets.chomp
-  puts "Please enter cohort"
-  cohort = gets.chomp
-return students
-  end
+while !name.empty? || !cohort.empty? do
+    students << {name: name, cohort: :november}
+    puts "Now we have #{students.count} students"
+    puts "Please enter name"
+    name = gets.chomp
+    puts "Please enter cohort"
+    cohort = gets.chomp
+end
 students
 end
-students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
 
+
+#
+#while !name.empty? || !cohort.empty?
+#  students << { name: name, cohort: cohort}
+#  puts "Please enter name"
+#  name = gets.chomp
+#  puts "Please enter cohort"
+#  cohort = gets.chomp
+#return students
+#  end
+#students
+#end
+#students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
+#
     
 
 def print_header(students)
@@ -30,7 +43,6 @@ def print_header(students)
 end
 
 def print(students)
-    puts students.length
 index = 0
 while index < students.length
    puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]}, from #{students[index][:country]}, #{students[index][:height]}m tall, scared of #{students[index][:fear]} and can't live without #{students[index][:addiction]}.".center(30) 
