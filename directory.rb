@@ -1,27 +1,36 @@
+
+def create_students
     puts "Please enter student details"
     puts "To finish, just hit return twice."
 
-def create_students
-attributes = { name: "", cohort: "", hobby: "", country: "", height: "", fear: "", addiction: "" }
-attributes.map do |attribute, value|
-puts "Please enter the student's #{attribute}:"
-value = gets.chomp
-attributes[attribute] = value
-end
+ puts "Please enter name"
+ name = gets.chomp
+  puts "Please enter cohort"
+  cohort = gets.chomp
 
 students = []
-students << attributes
 
+while !name.empty? || !cohort.empty?
+  students << { name: name, cohort: cohort}
+  puts "Please enter name"
+  name = gets.chomp
+  puts "Please enter cohort"
+  cohort = gets.chomp
+return students
+  end
 students
 end
+students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
+
+    
 
 def print_header(students)
-students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
    puts "The students of my cohort at Makers Academy".center(30)
    puts "-------------".center(30)
 end
 
 def print(students)
+    puts students.length
 index = 0
 while index < students.length
    puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]}, from #{students[index][:country]}, #{students[index][:height]}m tall, scared of #{students[index][:fear]} and can't live without #{students[index][:addiction]}.".center(30) 
@@ -52,4 +61,30 @@ print_footer(students)
 # {name: "Joffrey Baratheon", cohort: :november},
 # {name: "Norman Bates", cohort: :november}
 #]
-
+#
+#puts "Please enter the student's name"
+#value = gets.chomp
+#
+#  students = []
+#  attributes = {}
+#while value.length > 0 
+#
+#attributes = { name: value, cohort: "", hobby: "", country: "", height: "", fear: "", addiction: "", }
+# attributes(name:).reject{|attribute, value| attribute == :name}.map do |attribute, value|
+#     
+#  puts "Please enter the student's #{attribute}:"
+#  value = gets.chomp
+#  attributes[attribute] = value
+#  
+#puts "Please enter the student's name"
+#value = gets.chomp
+#  end
+#  return attributes
+#students << attributes
+#end
+#students
+#end
+#
+#
+#students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students") 
+#
