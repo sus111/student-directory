@@ -7,6 +7,8 @@ def process(selection)
             input_students
       when "2"
             show_students
+      when "3"
+            save_students
       when "9"
             exit
       else
@@ -24,13 +26,14 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv."
   puts "9. Exit"
 end
 
 def show_students
  print_header
- #print_students_list
- print_by_cohort
+ print_students_list
+ #print_by_cohort
  print_footer
 end
 
@@ -56,6 +59,20 @@ while month_not_found
       end
 end
 cohort
+end
+
+def save_students
+    #open the file for writing
+    file = File.open("students.csv", "w")
+    #iterate over the array of students
+    index = 0
+    while index < @students.length
+    student_data = [@students[index][:name], @students[index][:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+    index += 1
+    end
+    file.close
 end
 
 def input_students
@@ -108,10 +125,19 @@ end
 def print_students_list
 index = 0
   while index < @students.length
-   puts "#{@students[index][:cohort]} cohort)" 
+   puts "#{@students[index][:name]} (#{@students[index][:cohort]} cohort), enjoys #{@students[index][:hobby]} and has beautiful #{@students[index][:eyes]} eyes." 
    index += 1
   end
 end
+
+def print_footer
+   (puts "Sadly, we don't currently have any students at the Academy.") if @students.length == 0
+   (puts "We only have #{@students.count} lonely student at the whole academy.".center(30)) if @students.length == 1
+   (puts "Overall, we have #{@students.count} great students.".center(30)) if @students.length > 1
+end
+
+interactive_menu
+
 
 def print_by_cohort
 cohorts = {}
@@ -136,11 +162,3 @@ cohorts.each do |month, student|
     end
 end
 end
-
-def print_footer
-   (puts "Sadly, we don't currently have any students at the Academy.") if @students.length == 0
-   (puts "We only have #{@students.count} lonely student at the whole academy.".center(30)) if @students.length == 1
-   (puts "Overall, we have #{@students.count} great students.".center(30)) if @students.length > 1
-end
-
-interactive_menu
