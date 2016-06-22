@@ -72,28 +72,37 @@ def print_header(students)
 end
 end
 
-def print_students(students)
+#def print_students(students)
+#index = 0
+#  while index < students.length
+#   puts "#{students[index][:cohort]} cohort)" 
+#   index += 1
+#  end
+#end
+#
+def print_by_cohort(students)
+cohorts = {}
 index = 0
-  while index < students.length
-   puts "#{students[index][:name]} (#{students[index][:cohort]} cohort), enjoys #{students[index][:hobby]} with #{students[index][:eyes]} eyes.".center(30) 
-   index += 1
-  end
+while index < students.length
+current = students[index][:cohort]
+cohort_exists = cohorts.has_key?(current) 
+if cohort_exists
+  cohorts[current] << students[index]  
+else 
+cohorts[current] = [students[index]]
+end
+index += 1
 end
 
-
-#def print_students(students)
-#students.map do |key, value|
-#   puts key if key == :cohort
-#end
-
-#index = 0
-#while index < students.length
-#puts "Students from the #{students[index][:cohort]} cohort:"
-#puts current_cohort = students[index][:cohort]
-#students[:cohort].each do |key, cohort| 
-#  puts "#{students[index]}"   if cohort == current_cohort
-#  index += 1
-#end
+cohorts.each do |month, student|
+    puts "#{month} Cohort:"
+    index = 0
+    while index < student.length
+    puts "#{student[index][:name]}, likes #{student[index][:hobby]} and has #{student[index][:eyes]} eyes." 
+    index += 1
+    end
+end
+end
 
 def print_footer(students)
    (puts "Sadly, we don't currently have any students at the Academy.") if students.length == 0
@@ -103,5 +112,7 @@ end
 
 students = create_students
 print_header(students)
-print_students(students)
+print_by_cohort(students)
+#print_students(students)
 print_footer(students)
+
