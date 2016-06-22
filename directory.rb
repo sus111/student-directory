@@ -1,29 +1,38 @@
-def interactive_menu
-    students = []
-    loop do
-        # 1. print the menu and ask the user what to do
-        puts "1. Input the students"
-        puts "2. Show the students"
-        puts "9. Exit"
-        # 2. read the input and save it into a variable
-        selection = gets.chomp
-        # 3. do what the user has asked
-        case selection
-        when "1"
-           students = input_students
-        when "2"
-            print_header(students)
-            #print(students)
-            print_by_cohort(students)
-            print_footer(students)
-        when "9"
+
+@students = [] #an empty array available to all methods
+
+def process(selection)
+   case selection
+      when "1"
+            input_students
+      when "2"
+            show_students
+      when "9"
             exit
-        else
+      else
             puts "I don't know what you want, please try again."
-        end
+      end
+end
+
+def interactive_menu
+    loop do
+        print_menu
+        process(gets.chomp)
     end
 end
 
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+ print_header
+ #print_students_list
+ print_by_cohort
+ print_footer
+end
 
 def select_cohort
 month_not_found = true
@@ -54,7 +63,7 @@ def input_students
    puts "Please enter student details"
    puts "To finish, just hit return twice."
 
-students = []
+@students = []
 continue = true
   while continue
     puts "Please enter student's name:"
@@ -79,44 +88,42 @@ continue = true
         hobby: hobby,
         eyes: eye_colour
        }
-      students << student
+      @students << student
       end
     end
-#  print students
-students 
 end
 
-def print_header(students)
-   if students.length > 0  
-     if students.length == 1 
-        puts "Now we have #{students.length} student.".center(30)
+def print_header
+   if @students.length > 0  
+     if @students.length == 1 
+        puts "Now we have #{@students.length} student.".center(30)
         puts "The only student at Makers Academy:".center(30)
      else
-        puts "Now we have #{students.length} students!" 
+        puts "Now we have #{@students.length} students!" 
         puts "The students of my cohort at Makers Academy:".center(30)
      end
    puts "-------------------------------------------".center(30)
 end
 end
 
-def print_students(students)
+def print_students_list
 index = 0
-  while index < students.length
-   puts "#{students[index][:cohort]} cohort)" 
+  while index < @students.length
+   puts "#{@students[index][:cohort]} cohort)" 
    index += 1
   end
 end
 
-def print_by_cohort(students)
+def print_by_cohort
 cohorts = {}
 index = 0
-while index < students.length
-current = students[index][:cohort]
+while index < @students.length
+current = @students[index][:cohort]
 cohort_exists = cohorts.has_key?(current) 
 if cohort_exists
-  cohorts[current] << students[index]  
+  cohorts[current] << @students[index]  
 else 
-cohorts[current] = [students[index]]
+cohorts[current] = [@students[index]]
 end
 index += 1
 end
@@ -131,16 +138,10 @@ cohorts.each do |month, student|
 end
 end
 
-def print_footer(students)
-   (puts "Sadly, we don't currently have any students at the Academy.") if students.length == 0
-   (puts "We only have #{students.count} lonely student at the whole academy.".center(30)) if students.length == 1
-   (puts "Overall, we have #{students.count} great students.".center(30)) if students.length > 1
+def print_footer
+   (puts "Sadly, we don't currently have any students at the Academy.") if @students.length == 0
+   (puts "We only have #{@students.count} lonely student at the whole academy.".center(30)) if @students.length == 1
+   (puts "Overall, we have #{@students.count} great students.".center(30)) if @students.length > 1
 end
 
 interactive_menu
-students = input_students
-#print_header(students)
-#print_by_cohort(students)
-#print_students(students)
-#print_footer(students)
-
