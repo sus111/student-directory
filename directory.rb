@@ -1,3 +1,30 @@
+def interactive_menu
+    students = []
+    loop do
+        # 1. print the menu and ask the user what to do
+        puts "1. Input the students"
+        puts "2. Show the students"
+        puts "9. Exit"
+        # 2. read the input and save it into a variable
+        selection = gets.chomp
+        # 3. do what the user has asked
+        case selection
+        when "1"
+           students = input_students
+        when "2"
+            print_header(students)
+            #print(students)
+            print_by_cohort(students)
+            print_footer(students)
+        when "9"
+            exit
+        else
+            puts "I don't know what you want, please try again."
+        end
+    end
+end
+
+
 def select_cohort
 month_not_found = true
 while month_not_found
@@ -22,7 +49,7 @@ end
 cohort
 end
 
-def create_students
+def input_students
 
    puts "Please enter student details"
    puts "To finish, just hit return twice."
@@ -72,14 +99,14 @@ def print_header(students)
 end
 end
 
-#def print_students(students)
-#index = 0
-#  while index < students.length
-#   puts "#{students[index][:cohort]} cohort)" 
-#   index += 1
-#  end
-#end
-#
+def print_students(students)
+index = 0
+  while index < students.length
+   puts "#{students[index][:cohort]} cohort)" 
+   index += 1
+  end
+end
+
 def print_by_cohort(students)
 cohorts = {}
 index = 0
@@ -110,9 +137,10 @@ def print_footer(students)
    (puts "Overall, we have #{students.count} great students.".center(30)) if students.length > 1
 end
 
-students = create_students
-print_header(students)
-print_by_cohort(students)
+interactive_menu
+students = input_students
+#print_header(students)
+#print_by_cohort(students)
 #print_students(students)
-print_footer(students)
+#print_footer(students)
 
