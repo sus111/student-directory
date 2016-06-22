@@ -9,6 +9,8 @@ def process(selection)
             show_students
       when "3"
             save_students
+      when "4"
+            load_students
       when "9"
             exit
       else
@@ -27,6 +29,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv."
+  puts "4. Load students"
   puts "9. Exit"
 end
 
@@ -71,6 +74,27 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
     index += 1
+    end
+    file.close
+end
+
+def try_load_students
+    filename = ARGV.first
+    return if filename.nil?
+    if File.exists?(filename)
+        load_students(filename)
+        puts "Loaded #{@students.count} from #{filename}"
+    else
+        puts "Sorry, #{filename} doesn't exist."
+        exit
+    end
+end
+
+def load_students(filename = "students.csv")
+    file = File.open("students.csv", "r")
+    file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort}
     end
     file.close
 end
