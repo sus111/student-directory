@@ -63,7 +63,6 @@ def input_students
    puts "Please enter student details"
    puts "To finish, just hit return twice."
 
-@students = []
 continue = true
   while continue
     puts "Please enter student's name:"
