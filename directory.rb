@@ -1,5 +1,6 @@
 
 @students = [] #an empty array available to all methods
+@filename = ""
 
 def process(selection)
    case selection
@@ -12,6 +13,7 @@ def process(selection)
       when "4"
             load_students
       when "9"
+            puts "Goodbye!"
             exit
       else
             puts "I don't know what you want, please try again."
@@ -19,17 +21,21 @@ def process(selection)
 end
 
 def interactive_menu
-    loop do
+puts "Welcome to the Maker's Academy Student Database"
+puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+puts ""
+   loop do
         print_menu
         process(STDIN.gets.chomp)
     end
 end
 
 def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv."
-  puts "4. Load students"
+puts "Please choose one of the following options:".center(30)
+  puts "1. Input students"
+  puts "2. Show students"
+  puts "3. Save students to a chosen file"
+  puts "4. Load students from a chosen file"
   puts "9. Exit"
 end
 
@@ -49,24 +55,27 @@ while month_not_found
       if months.include?(cohort)
           month_not_found = false
           cohort.capitalize!
-      else
+      elsif
         predicted_month = months.select { |month| month if month[0..2] == cohort[0..2] }[0].capitalize
       puts "Did you mean #{predicted_month}? Y/N"
-      answer = STDIN.gets.chomp
+      answer = STDIN.gets.chomp.upcase
         if answer == "Y"
             cohort = predicted_month
             month_not_found = false
         elsif answer == "N"
             puts "Please enter the month correctly."
         end
+      else
+          puts "Please enter the month correctly."
       end
 end
 cohort
 end
 
 def save_students
-    #open the file for writing
-    file = File.open("students.csv", "w")
+    puts "To which file would you like to save students?"
+    choose_file
+    file = File.open(@filename, "w")
     #iterate over the array of students
     index = 0
     while index < @students.length
@@ -74,29 +83,39 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
     index += 1
+    puts "You saved #{csv_line} to students.csv."
     end
     file.close
+    puts "There are no students to be saved." if @students.length == 0 
 end
 
 def try_load_students
-    filename = ARGV.first
-    return if filename.nil?
-    if File.exists?(filename)
-        load_students(filename)
-        puts "Loaded #{@students.count} from #{filename}"
+    @filename = ARGV.first
+    return if @filename.nil?
+    if File.exists?(@filename)
+        load_students(@filename)
+    #    puts "Loaded #{@students.count} from #{filename}"
     else
-        puts "Sorry, #{filename} doesn't exist."
+        puts "Sorry, #{@filename} doesn't exist."
         exit
     end
 end
 
+def choose_file
+    puts "Enter 1 for students.csv, or specify other file:"
+    STDIN.gets.chomp == "1" ? @filename = "students.csv" : @filename = STDIN.gets.chomp
+end
+
 def load_students(filename = "students.csv")
-    file = File.open(filename, "r")
+    puts "From which file would you like to load students?"
+    choose_file
+    file = File.open(@filename, "r")
     file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort}
     end
     file.close
+    puts "Loaded #{@students.count} from students.csv"
 end
 
 def input_students
@@ -111,25 +130,27 @@ continue = true
     if name.empty?
         continue = false
     else
-
       cohort = select_cohort
 
-
-      puts "Please enter student's hobby:"
-      hobby = STDIN.gets.chomp
-      hobby = "unknown hobbies" if hobby.empty?
-      puts "Please enter student's eye colour"
-      eye_colour = STDIN.gets.chomp
-      eye_colour = "unknown-coloured" if eye_colour.empty?
+      puts "Please enter student's country of birth:"
+      country = STDIN.gets.chomp.capitalize
+      country = "an unknown country" if country.empty?
+      puts "Please choose the best word to describe this student:"
+      character = STDIN.gets.chomp.downcase
+      puts "Please enter student's biggest strength:"
+      strength = STDIN.gets.chomp.downcase
+      strength = "unknown" if strength.empty?
 
       student = {
         name: name,
         cohort: cohort,
-        hobby: hobby,
-        eyes: eye_colour
+        country: country,
+        character: character,
+        strength: strength
        }
       @students << student
       end
+      puts "You've just entered #{@students[0][:name]} into the students' list."
     end
 end
 
@@ -149,7 +170,7 @@ end
 def print_students_list
 index = 0
   while index < @students.length
-   puts "#{@students[index][:name]} (#{@students[index][:cohort]} cohort), enjoys #{@students[index][:hobby]} and has beautiful #{@students[index][:eyes]} eyes." 
+   puts "#{@students[index][:name]} (#{@students[index][:cohort]} cohort), from #{@students[index][:country]}, is a #{@students[index][:character]} student, who's biggest strength is #{@students[index][:strength]}." 
    index += 1
   end
 end
@@ -181,7 +202,7 @@ cohorts.each do |month, student|
     puts "#{month} Cohort:"
     index = 0
     while index < student.length
-    puts "#{student[index][:name]}, likes #{student[index][:hobby]} and has #{student[index][:eyes]} eyes." 
+    puts "#{student[index][:name]}, from #{student[index][:country]}, a #{student[index][:character]} student, who's good at #{student[index][:strength]}." 
     index += 1
     end
 end
