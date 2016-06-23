@@ -21,7 +21,7 @@ end
 def interactive_menu
     loop do
         print_menu
-        process(gets.chomp)
+        process(STDIN.gets.chomp)
     end
 end
 
@@ -44,7 +44,7 @@ def select_cohort
 month_not_found = true
 while month_not_found
       puts "Please enter student's cohort:"
-      cohort = gets.chomp.downcase
+      cohort = STDIN.gets.chomp.downcase
       months = [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" ]
       if months.include?(cohort)
           month_not_found = false
@@ -52,7 +52,7 @@ while month_not_found
       else
         predicted_month = months.select { |month| month if month[0..2] == cohort[0..2] }[0].capitalize
       puts "Did you mean #{predicted_month}? Y/N"
-      answer = gets.chomp
+      answer = STDIN.gets.chomp
         if answer == "Y"
             cohort = predicted_month
             month_not_found = false
@@ -91,7 +91,7 @@ def try_load_students
 end
 
 def load_students(filename = "students.csv")
-    file = File.open("students.csv", "r")
+    file = File.open(filename, "r")
     file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort}
@@ -107,7 +107,7 @@ def input_students
 continue = true
   while continue
     puts "Please enter student's name:"
-    name = gets.chomp
+    name = STDIN.gets.chomp
     if name.empty?
         continue = false
     else
@@ -116,10 +116,10 @@ continue = true
 
 
       puts "Please enter student's hobby:"
-      hobby = gets.chomp
+      hobby = STDIN.gets.chomp
       hobby = "unknown hobbies" if hobby.empty?
       puts "Please enter student's eye colour"
-      eye_colour = gets.chomp
+      eye_colour = STDIN.gets.chomp
       eye_colour = "unknown-coloured" if eye_colour.empty?
 
       student = {
@@ -160,8 +160,8 @@ def print_footer
    (puts "Overall, we have #{@students.count} great students.".center(30)) if @students.length > 1
 end
 
+try_load_students
 interactive_menu
-
 
 def print_by_cohort
 cohorts = {}
