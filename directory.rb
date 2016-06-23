@@ -11,7 +11,7 @@ def process(selection)
       when "3"
             save_students
       when "4"
-            load_students
+            load_chosen_file 
       when "9"
             puts "Goodbye!"
             exit
@@ -21,8 +21,9 @@ def process(selection)
 end
 
 def interactive_menu
-puts "Welcome to the Maker's Academy Student Database"
-puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+puts "Welcome to the Maker's Academy Student Database".center(60)
+puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".center(60)
+@students.count == 1 ? (puts "#{@students.count} student currently in #{@filename}".center(60)) : (puts "#{@students.count} students currenty in #{@filename}".center(60))
 puts ""
    loop do
         print_menu
@@ -73,7 +74,6 @@ cohort
 end
 
 def save_students
-    puts "To which file would you like to save students?"
     choose_file
     file = File.open(@filename, "w")
     #iterate over the array of students
@@ -91,7 +91,7 @@ end
 
 def try_load_students
     @filename = ARGV.first
-    return if @filename.nil?
+    @filename = "students.csv" if @filename.nil?
     if File.exists?(@filename)
         load_students(@filename)
     #    puts "Loaded #{@students.count} from #{filename}"
@@ -102,26 +102,29 @@ def try_load_students
 end
 
 def choose_file
+    puts "Which file would you like to use?"
     puts "Enter 1 for students.csv, or specify other file:"
     STDIN.gets.chomp == "1" ? @filename = "students.csv" : @filename = STDIN.gets.chomp
 end
 
-def load_students(filename = "students.csv")
-    puts "From which file would you like to load students?"
+def load_chosen_file
     choose_file
+    load_students
+    @students.count == 1 ? (puts "#{@students.count} student currently in #{@filename}") : (puts "#{@students.count} students currenty in #{@filename}")
+end
+
+def load_students(filename = "students.csv")
     file = File.open(@filename, "r")
     file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort}
     end
     file.close
-    puts "Loaded #{@students.count} from students.csv"
-end
+   end
 
 def input_students
 
-   puts "Please enter student details"
-   puts "To finish, just hit return twice."
+   puts "Please enter student details, to finish hit return twice."
 
 continue = true
   while continue
@@ -155,30 +158,28 @@ continue = true
 end
 
 def print_header
-   if @students.length > 0  
-     if @students.length == 1 
-        puts "Now we have #{@students.length} student.".center(30)
-        puts "The only student at Makers Academy:".center(30)
-     else
-        puts "Now we have #{@students.length} students!" 
-        puts "The students of my cohort at Makers Academy:".center(30)
-     end
-   puts "-------------------------------------------".center(30)
-end
+        puts "Students of Makers Academy:".center(60)
+   puts "-------------------------------------------\n".center(60)
 end
 
 def print_students_list
 index = 0
   while index < @students.length
-   puts "#{@students[index][:name]} (#{@students[index][:cohort]} cohort), from #{@students[index][:country]}, is a #{@students[index][:character]} student, who's biggest strength is #{@students[index][:strength]}." 
+   puts "#{@students[index][:name]} (#{@students[index][:cohort]} cohort)".center(60)
+   if @students[index][:country]
+   puts "#{@students[index][:name]} is from #{@students[index][:country]} and is a #{@students[index][:character]} student, who's biggest strength lies in #{@students[index][:strength]}\n".center(60) 
+   end
    index += 1
   end
+  puts ""
 end
 
 def print_footer
-   (puts "Sadly, we don't currently have any students at the Academy.") if @students.length == 0
-   (puts "We only have #{@students.count} lonely student at the whole academy.".center(30)) if @students.length == 1
-   (puts "Overall, we have #{@students.count} great students.".center(30)) if @students.length > 1
+   (puts "Sadly, we don't currently have any students at the Academy.".center(60)) if @students.length == 0
+   (puts "We only have #{@students.count} lonely student at the whole academy.".center(60)) if @students.length == 1
+   puts "----------------------------------------".center(60)
+   (puts "Overall, we have #{@students.count} students.".center(60)) if @students.length > 1
+   puts ""
 end
 
 try_load_students
